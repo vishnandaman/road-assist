@@ -2,15 +2,12 @@ const mongoose = require('mongoose');
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-      useFindAndModify: false
-    });
+    const mongoUri = process.env.MONGO_URI || 'mongodb://localhost:27017/roadassist';
+    console.log('Connecting to MongoDB:', mongoUri);
+    await mongoose.connect(mongoUri);
     console.log('MongoDB Connected...');
   } catch (err) {
-    console.error(err.message);
+    console.error('MongoDB connection error:', err.message);
     process.exit(1);
   }
 };

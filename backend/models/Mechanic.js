@@ -6,11 +6,18 @@ const MechanicSchema = new mongoose.Schema({
     ref: 'User',
     required: true
   },
-  services: [{
+  specialties: [{
     type: String,
     enum: ['towing', 'battery', 'fuel', 'tire', 'lockout', 'other']
   }],
-  certification: String,
+  experience: {
+    type: Number, // years of experience
+    default: 0
+  },
+  hourlyRate: {
+    type: Number,
+    default: 50
+  },
   rating: {
     type: Number,
     default: 0
@@ -18,6 +25,17 @@ const MechanicSchema = new mongoose.Schema({
   reviewsCount: {
     type: Number,
     default: 0
+  },
+  currentLocation: {
+    type: {
+      type: String,
+      enum: ['Point'],
+      default: 'Point'
+    },
+    coordinates: {
+      type: [Number],
+      default: [0, 0]
+    }
   },
   availability: {
     type: Boolean,
@@ -34,7 +52,14 @@ const MechanicSchema = new mongoose.Schema({
   basePrice: {
     type: Number,
     default: 20
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
   }
 });
+
+// Add 2dsphere index for currentLocation
+MechanicSchema.index({ currentLocation: '2dsphere' });
 
 module.exports = mongoose.model('Mechanic', MechanicSchema);

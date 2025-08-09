@@ -2,7 +2,7 @@ const Request = require('../models/Request');
 const User = require('../models/User');
 const Mechanic = require('../models/Mechanic');
 const { calculateDistance } = require('../utils/geolocation');
-const { sendNotification } = require('../utils/notifications');
+const { sendNotification } = require('../utils/notification');
 
 // @desc    Create a new service request
 // @route   POST /api/requests

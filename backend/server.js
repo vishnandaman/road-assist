@@ -14,12 +14,16 @@ const mechanicRoutes = require('./routes/mechanicRoutes');
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Database connection
-require('./config/db');
+const connectDB = require('./config/db');
+connectDB();
 
 // Routes
 app.use('/api/auth', authRoutes);
@@ -33,4 +37,6 @@ app.use(require('./middleware/errorHandler'));
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+}).on('error', (err) => {
+  console.error('Server error:', err);
 });

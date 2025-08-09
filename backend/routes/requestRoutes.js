@@ -4,12 +4,12 @@ const {
   getNearbyRequests,
   acceptRequest
 } = require('../controllers/requestController');
-const { protect } = require('../middleware/auth');
+const { auth, authorize } = require('../middleware/auth');
 
 const router = express.Router();
 
-router.post('/', createRequest);
-router.get('/nearby', protect, getNearbyRequests);
-router.put('/:id/accept', protect, acceptRequest);
+router.post('/', auth, createRequest);
+router.get('/nearby', auth, authorize('mechanic'), getNearbyRequests);
+router.put('/:id/accept', auth, authorize('mechanic'), acceptRequest);
 
 module.exports = router;
