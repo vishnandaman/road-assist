@@ -243,4 +243,3 @@ The API follows RESTful conventions with consistent response formats:
   "message": "Optional message"
 }
 ```
-
